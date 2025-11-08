@@ -170,6 +170,7 @@ export function ImageAnalyzer() {
             onChange={handleFileChange}
             ref={fileInputRef}
             className="hidden"
+            id="image-input"
           />
           <Camera className="mx-auto h-12 w-12 text-muted-foreground" />
           <h3 className="mt-4 text-lg font-medium text-foreground">
@@ -393,3 +394,5 @@ Progress.defaultProps = {
   ...OldProgress.defaultProps,
   indicatorClassName: 'bg-primary',
 };
+
+    
