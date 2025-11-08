@@ -5,6 +5,7 @@
   "navHistory": "History",
   "navCalculator": "Calculator",
   "navPlanner": "Planner",
+  "navRecipe": "Recipe Generator",
   "myAccount": "My Account",
   "profile": "Profile",
   "theme": "Theme",
@@ -36,5 +37,7 @@
   "signInLink": "Sign In",
   "language": "Language",
   "english": "English",
-  "hindi": "Hindi"
+  "hindi": "Hindi",
+  "recipeGeneratorTitle": "Recipe Generator",
+  "recipeGeneratorSubtitle": "Create delicious recipes tailored to your goals and ingredients."
 }

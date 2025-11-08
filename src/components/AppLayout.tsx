@@ -16,6 +16,7 @@ import {
   Sun,
   Laptop,
   Languages,
+  UtensilsCrossed,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -62,6 +63,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/history', icon: History, label: translations.navHistory },
     { href: '/calculator', icon: Calculator, label: translations.navCalculator },
     { href: '/planner', icon: CalendarCheck, label: translations.navPlanner },
+    { href: '/recipe', icon: UtensilsCrossed, label: translations.navRecipe },
   ];
 
   const handleLogout = () => {

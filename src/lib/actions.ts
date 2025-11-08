@@ -11,6 +11,11 @@ import type {
   GenerateWeeklyPlanInput,
   GenerateWeeklyPlanOutput,
 } from '@/ai/flows/generate-weekly-plan';
+import { generateRecipe } from '@/ai/flows/generate-recipe';
+import type {
+  GenerateRecipeInput,
+  GenerateRecipeOutput,
+} from '@/ai/flows/generate-recipe';
 
 import { revalidatePath } from 'next/cache';
 
@@ -47,7 +52,7 @@ export async function getHealthierAlternatives(
 ): Promise<{ recommendations: string } | { error: string }> {
   try {
     const result = await recommendHealthierAlternatives(input);
-    revalidatePath('/dashboard');
+revalidatePath('/dashboard');
     return result;
   } catch (error) {
     console.error('Error in getHealthierAlternatives:', error);
@@ -60,10 +65,23 @@ export async function getWeeklyPlan(
 ): Promise<GenerateWeeklyPlanOutput | { error: string }> {
   try {
     const result = await generateWeeklyPlan(input);
-    revalidatePath('/planner');
+revalidatePath('/planner');
     return result;
   } catch (error) {
     console.error('Error in getWeeklyPlan:', error);
     return { error: 'Failed to generate weekly plan. Please try again.' };
+  }
+}
+
+export async function getGeneratedRecipe(
+  input: GenerateRecipeInput
+): Promise<GenerateRecipeOutput | { error: string }> {
+  try {
+    const result = await generateRecipe(input);
+    revalidatePath('/recipe');
+    return result;
+  } catch (error) {
+    console.error('Error in getGeneratedRecipe:', error);
+    return { error: 'Failed to generate recipe. Please try again.' };
   }
 }

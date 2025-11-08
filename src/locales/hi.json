@@ -5,6 +5,7 @@
   "navHistory": "इतिहास",
   "navCalculator": "कैलकुलेटर",
   "navPlanner": "योजनाकर्ता",
+  "navRecipe": "रेसिपी जेनरेटर",
   "myAccount": "मेरा खाता",
   "profile": "प्रोफ़ाइल",
   "theme": "थीम",
@@ -36,5 +37,7 @@
   "signInLink": "साइन इन करें",
   "language": "भाषा",
   "english": "अंग्रेज़ी",
-  "hindi": "हिंदी"
+  "hindi": "हिंदी",
+  "recipeGeneratorTitle": "रेसिपी जेनरेटर",
+  "recipeGeneratorSubtitle": "अपने लक्ष्यों और सामग्री के अनुरूप स्वादिष्ट व्यंजन बनाएं।"
 }
