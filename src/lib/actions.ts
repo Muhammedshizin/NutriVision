@@ -6,6 +6,12 @@ import { providePersonalizedDietFeedback } from '@/ai/flows/personalized-diet-fe
 import type { PersonalizedDietFeedbackInput } from '@/ai/flows/personalized-diet-feedback';
 import { recommendHealthierAlternatives } from '@/ai/flows/healthier-alternatives';
 import type { HealthierAlternativesInput } from '@/ai/flows/healthier-alternatives';
+import { generateWeeklyPlan } from '@/ai/flows/generate-weekly-plan';
+import type {
+  GenerateWeeklyPlanInput,
+  GenerateWeeklyPlanOutput,
+} from '@/ai/flows/generate-weekly-plan';
+
 import { revalidatePath } from 'next/cache';
 
 export async function getNutritionData(
@@ -46,5 +52,18 @@ export async function getHealthierAlternatives(
   } catch (error) {
     console.error('Error in getHealthierAlternatives:', error);
     return { error: 'Failed to generate recommendations. Please try again.' };
+  }
+}
+
+export async function getWeeklyPlan(
+  input: GenerateWeeklyPlanInput
+): Promise<GenerateWeeklyPlanOutput | { error: string }> {
+  try {
+    const result = await generateWeeklyPlan(input);
+    revalidatePath('/planner');
+    return result;
+  } catch (error) {
+    console.error('Error in getWeeklyPlan:', error);
+    return { error: 'Failed to generate weekly plan. Please try again.' };
   }
 }

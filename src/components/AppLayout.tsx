@@ -11,6 +11,7 @@ import {
   LogOut,
   User as UserIcon,
   Calculator,
+  CalendarCheck,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -42,6 +43,7 @@ const navItems = [
   { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
   { href: '/history', icon: History, label: 'History' },
   { href: '/calculator', icon: Calculator, label: 'Calculator' },
+  { href: '/planner', icon: CalendarCheck, label: 'Planner' },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
