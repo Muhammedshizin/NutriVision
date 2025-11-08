@@ -1,10 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import { BarChart, Flame, Leaf, MinusCircle, ShieldCheck } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { useLanguage } from '@/hooks/use-language';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
+import { useLocalStorage } from '@/hooks/use-local-storage';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 const challenges = [
   {
@@ -52,6 +56,27 @@ const challenges = [
 
 export function Challenges() {
   const { translations } = useLanguage();
+  const [joinedChallenges, setJoinedChallenges] = useLocalStorage<string[]>('joined-challenges', []);
+  const { toast } = useToast();
+
+  const handleJoinToggle = (challengeId: string, challengeTitle: string) => {
+    setJoinedChallenges((prev) => {
+      const isJoined = prev.includes(challengeId);
+      if (isJoined) {
+        toast({
+          title: 'Challenge Left',
+          description: `You have left the "${challengeTitle}" challenge.`,
+        });
+        return prev.filter((id) => id !== challengeId);
+      } else {
+        toast({
+          title: 'Challenge Joined!',
+          description: `You have successfully joined the "${challengeTitle}" challenge.`,
+        });
+        return [...prev, challengeId];
+      }
+    });
+  };
 
   return (
      <div className="container mx-auto max-w-4xl space-y-8">
@@ -65,8 +90,10 @@ export function Challenges() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {challenges.map((challenge) => (
-          <Card key={challenge.id} className="flex flex-col">
+        {challenges.map((challenge) => {
+          const isJoined = joinedChallenges.includes(challenge.id);
+          return (
+          <Card key={challenge.id} className={cn("flex flex-col", isJoined && "border-primary")}>
             <CardHeader>
               <div className="flex items-center gap-3">
                 <challenge.icon className="h-8 w-8 text-primary" />
@@ -83,10 +110,16 @@ export function Challenges() {
               <CardDescription>{challenge.description}</CardDescription>
             </CardContent>
             <div className='p-6 pt-0'>
-                <Button className="w-full">Join Challenge</Button>
+                <Button 
+                  className="w-full" 
+                  variant={isJoined ? 'secondary' : 'default'}
+                  onClick={() => handleJoinToggle(challenge.id, challenge.title)}
+                >
+                  {isJoined ? 'Leave Challenge' : 'Join Challenge'}
+                </Button>
             </div>
           </Card>
-        ))}
+        )})}
       </div>
     </div>
   )
