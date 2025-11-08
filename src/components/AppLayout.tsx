@@ -17,6 +17,7 @@ import {
   Laptop,
   Languages,
   UtensilsCrossed,
+  Bot,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -64,6 +65,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/calculator', icon: Calculator, label: translations.navCalculator },
     { href: '/planner', icon: CalendarCheck, label: translations.navPlanner },
     { href: '/recipe', icon: UtensilsCrossed, label: translations.navRecipe },
+    { href: '/chatbot', icon: Bot, label: translations.navChatbot },
   ];
 
   const handleLogout = () => {
@@ -185,7 +187,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
           <ThemeToggle />
         </header>
-        <main className="flex-1 overflow-auto p-4 sm:p-6">{children}</main>
+        <main className="flex h-[calc(100vh-3.5rem)] flex-col">
+          <div className="flex-1 overflow-auto p-4 sm:p-6">{children}</div>
+        </main>
       </SidebarInset>
     </SidebarProvider>
   );

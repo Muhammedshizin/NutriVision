@@ -16,6 +16,11 @@ import type {
   GenerateRecipeInput,
   GenerateRecipeOutput,
 } from '@/ai/flows/generate-recipe';
+import { healthChat } from '@/ai/flows/health-chat';
+import type {
+  HealthChatInput,
+  HealthChatOutput,
+} from '@/ai/flows/health-chat';
 
 import { revalidatePath } from 'next/cache';
 
@@ -83,5 +88,18 @@ export async function getGeneratedRecipe(
   } catch (error) {
     console.error('Error in getGeneratedRecipe:', error);
     return { error: 'Failed to generate recipe. Please try again.' };
+  }
+}
+
+export async function getChatbotResponse(
+  input: HealthChatInput
+): Promise<HealthChatOutput | { error: string }> {
+  try {
+    const result = await healthChat(input);
+    revalidatePath('/chatbot');
+    return result;
+  } catch (error) {
+    console.error('Error in getChatbotResponse:', error);
+    return { error: 'Failed to get chatbot response. Please try again.' };
   }
 }

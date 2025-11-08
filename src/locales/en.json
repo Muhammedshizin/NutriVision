@@ -6,6 +6,7 @@
   "navCalculator": "Calculator",
   "navPlanner": "Planner",
   "navRecipe": "Recipe Generator",
+  "navChatbot": "AI Chatbot",
   "myAccount": "My Account",
   "profile": "Profile",
   "theme": "Theme",
@@ -39,5 +40,7 @@
   "english": "English",
   "hindi": "Hindi",
   "recipeGeneratorTitle": "Recipe Generator",
-  "recipeGeneratorSubtitle": "Create delicious recipes tailored to your goals and ingredients."
+  "recipeGeneratorSubtitle": "Create delicious recipes tailored to your goals and ingredients.",
+  "chatbotTitle": "AI Health Chatbot",
+  "chatbotSubtitle": "Ask me anything about nutrition and wellness."
 }

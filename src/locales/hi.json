@@ -6,6 +6,7 @@
   "navCalculator": "कैलकुलेटर",
   "navPlanner": "योजनाकर्ता",
   "navRecipe": "रेसिपी जेनरेटर",
+  "navChatbot": "एआई चैटबॉट",
   "myAccount": "मेरा खाता",
   "profile": "प्रोफ़ाइल",
   "theme": "थीम",
@@ -39,5 +40,7 @@
   "english": "अंग्रेज़ी",
   "hindi": "हिंदी",
   "recipeGeneratorTitle": "रेसिपी जेनरेटर",
-  "recipeGeneratorSubtitle": "अपने लक्ष्यों और सामग्री के अनुरूप स्वादिष्ट व्यंजन बनाएं।"
+  "recipeGeneratorSubtitle": "अपने लक्ष्यों और सामग्री के अनुरूप स्वादिष्ट व्यंजन बनाएं।",
+  "chatbotTitle": "एआई स्वास्थ्य चैटबॉट",
+  "chatbotSubtitle": "मुझसे पोषण और कल्याण के बारे में कुछ भी पूछें।"
 }
