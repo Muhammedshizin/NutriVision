@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from '../ui/table';
+import { useLanguage } from '@/hooks/use-language';
 
 const daysOfWeek: (keyof GenerateWeeklyPlanOutput)[] = [
   'monday',
@@ -39,6 +40,7 @@ export function WeeklyPlanner() {
   const [plan, setPlan] = useState<GenerateWeeklyPlanOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { translations } = useLanguage();
 
   const handleGeneratePlan = async () => {
     setIsLoading(true);
@@ -60,10 +62,10 @@ export function WeeklyPlanner() {
     <div className="container mx-auto max-w-6xl space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold font-headline tracking-tight sm:text-4xl">
-          Weekly Meal Planner
+          {translations.plannerTitle}
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Generate a personalized 7-day meal plan based on your health goals.
+          {translations.plannerSubtitle}
         </p>
       </div>
 

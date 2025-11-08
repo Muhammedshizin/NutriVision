@@ -9,6 +9,7 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';
 import { PlusCircle, Trash2, X } from 'lucide-react';
+import { useLanguage } from '@/hooks/use-language';
 
 interface FoodItem {
   name: string;
@@ -22,6 +23,7 @@ interface CartItem extends FoodItem {
 export function CalorieCalculator() {
   const [searchTerm, setSearchTerm] = useState('');
   const [cart, setCart] = useLocalStorage<CartItem[]>('calorie-cart', []);
+  const { translations } = useLanguage();
 
   const filteredFoods = useMemo(() => {
     if (!searchTerm) return [];
@@ -55,10 +57,10 @@ export function CalorieCalculator() {
     <div className="container mx-auto max-w-4xl space-y-8">
        <div className="text-center">
         <h1 className="text-3xl font-bold font-headline tracking-tight sm:text-4xl">
-          Manual Calorie Calculator
+          {translations.calculatorTitle}
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Add food items to calculate the total calories for your meal.
+          {translations.calculatorSubtitle}
         </p>
       </div>
 

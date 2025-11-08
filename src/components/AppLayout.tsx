@@ -15,6 +15,7 @@ import {
   Moon,
   Sun,
   Laptop,
+  Languages,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -46,20 +47,22 @@ import {
 } from './ui/dropdown-menu';
 import { useTheme } from 'next-themes';
 import { ThemeToggle } from './ThemeToggle';
-
-const navItems = [
-  { href: '/home', icon: Home, label: 'Analyzer' },
-  { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
-  { href: '/history', icon: History, label: 'History' },
-  { href: '/calculator', icon: Calculator, label: 'Calculator' },
-  { href: '/planner', icon: CalendarCheck, label: 'Planner' },
-];
+import { useLanguage } from '@/hooks/use-language';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const router = useRouter();
   const { setTheme } = useTheme();
+  const { translations, setLanguage } = useLanguage();
+
+  const navItems = [
+    { href: '/home', icon: Home, label: translations.navAnalyzer },
+    { href: '/dashboard', icon: BarChart3, label: translations.navDashboard },
+    { href: '/history', icon: History, label: translations.navHistory },
+    { href: '/calculator', icon: Calculator, label: translations.navCalculator },
+    { href: '/planner', icon: CalendarCheck, label: translations.navPlanner },
+  ];
 
   const handleLogout = () => {
     logout();
@@ -114,31 +117,47 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="right" align="start" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{translations.myAccount}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem disabled>
                 <UserIcon className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <span>{translations.profile}</span>
               </DropdownMenuItem>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
                   <Sun className="mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                   <Moon className="absolute mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                  <span>Theme</span>
+                  <span>{translations.theme}</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent>
                     <DropdownMenuItem onClick={() => setTheme('light')}>
                       <Sun className="mr-2 h-4 w-4" />
-                      <span>Light</span>
+                      <span>{translations.themeLight}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setTheme('dark')}>
                       <Moon className="mr-2 h-4 w-4" />
-                      <span>Dark</span>
+                      <span>{translations.themeDark}</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setTheme('system')}>
                       <Laptop className="mr-2 h-4 w-4" />
-                      <span>System</span>
+                      <span>{translations.themeSystem}</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+               <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Languages className="mr-2 h-4 w-4" />
+                  <span>{translations.language}</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem onClick={() => setLanguage('en')}>
+                      <span>{translations.english}</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLanguage('hi')}>
+                      <span>{translations.hindi}</span>
                     </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
@@ -146,7 +165,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                <span>{translations.logout}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

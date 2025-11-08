@@ -27,6 +27,7 @@ import { healthGoals } from '@/lib/types';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { Progress } from '../ui/progress';
 import { Badge } from '../ui/badge';
+import { useLanguage } from '@/hooks/use-language';
 
 type AnalysisState = 'idle' | 'analyzing' | 'feedback' | 'done';
 
@@ -45,6 +46,7 @@ export function ImageAnalyzer() {
   );
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { translations } = useLanguage();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -146,10 +148,10 @@ export function ImageAnalyzer() {
     <div className="container mx-auto max-w-4xl space-y-8">
       <div className="text-center">
         <h1 className="text-3xl font-bold font-headline tracking-tight sm:text-4xl">
-          Analyze Your Meal
+          {translations.analyzerTitle}
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Upload a photo of your food to get instant nutritional insights.
+          {translations.analyzerSubtitle}
         </p>
       </div>
 

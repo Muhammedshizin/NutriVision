@@ -2,10 +2,12 @@
 import { AppLayout } from '@/components/AppLayout';
 import { HistoryList } from '@/components/history/HistoryList';
 import { useRequireAuth } from '@/hooks/use-auth';
+import { useLanguage } from '@/hooks/use-language';
 import { Loader2 } from 'lucide-react';
 
 export default function HistoryPage() {
   const { user, loading } = useRequireAuth();
+  const { translations } = useLanguage();
 
   if (loading || !user) {
     return (
@@ -19,10 +21,10 @@ export default function HistoryPage() {
       <div className="space-y-8">
         <div className="text-left">
           <h1 className="text-3xl font-bold font-headline tracking-tight sm:text-4xl">
-            Analysis History
+            {translations.historyTitle}
           </h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Review your past meals and nutritional data.
+            {translations.historySubtitle}
           </p>
         </div>
         <HistoryList />

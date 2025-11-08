@@ -17,6 +17,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { Logo } from '@/components/Logo';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
+import { useLanguage } from '@/hooks/use-language';
 
 export default function SignupPage() {
   const [username, setUsername] = useState('');
@@ -24,6 +25,7 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { login, user, loading } = useAuth();
+  const { translations } = useLanguage();
   
   useEffect(() => {
     if (!loading && user) {
@@ -55,15 +57,15 @@ export default function SignupPage() {
       <Card className="w-full max-w-sm">
         <CardHeader className="items-center text-center">
           <Logo />
-          <CardTitle className="pt-4 font-headline">Create an Account</CardTitle>
+          <CardTitle className="pt-4 font-headline">{translations.signupTitle}</CardTitle>
           <CardDescription>
-            Start your journey to better nutrition today.
+            {translations.signupSubtitle}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSignup}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">{translations.usernameLabel}</Label>
               <Input
                 id="username"
                 type="text"
@@ -75,7 +77,7 @@ export default function SignupPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{translations.passwordLabel}</Label>
               <Input
                 id="password"
                 type="password"
@@ -90,15 +92,15 @@ export default function SignupPage() {
           <CardFooter className="flex flex-col gap-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Create Account
+              {translations.createAccountButton}
             </Button>
             <p className="text-center text-sm text-muted-foreground">
-              Already have an account?{' '}
+              {translations.haveAccountPrompt}{' '}
               <Link
                 href="/login"
                 className="font-semibold text-primary underline-offset-4 hover:underline"
               >
-                Sign In
+                {translations.signInLink}
               </Link>
             </p>
           </CardFooter>
