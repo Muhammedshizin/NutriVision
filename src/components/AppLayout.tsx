@@ -1,0 +1,126 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  Home,
+  BarChart3,
+  History,
+  LogOut,
+  User as UserIcon,
+} from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarTrigger,
+  SidebarInset,
+} from '@/components/ui/sidebar';
+import { Logo } from './Logo';
+import { useAuth } from '@/hooks/use-auth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
+
+const navItems = [
+  { href: '/home', icon: Home, label: 'Analyzer' },
+  { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
+  { href: '/history', icon: History, label: 'History' },
+];
+
+export function AppLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/login');
+  };
+
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader className="p-0 pt-2">
+          <div className="p-2">
+            <Logo />
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            {navItems.map((item) => (
+              <SidebarMenuItem key={item.href}>
+                <Link href={item.href} legacyBehavior passHref>
+                  <SidebarMenuButton
+                    isActive={pathname === item.href}
+                    tooltip={item.label}
+                  >
+                    <item.icon />
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-14 w-full justify-start gap-3 px-3 group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
+              >
+                <Avatar className="h-8 w-8">
+                  <AvatarImage
+                    src={`https://api.dicebear.com/8.x/pixel-art/svg?seed=${user?.username}`}
+                  />
+                  <AvatarFallback>
+                    {user?.username?.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="truncate group-data-[collapsible=icon]:hidden">
+                  {user?.username}
+                </span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="right" align="start" className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem disabled>
+                <UserIcon className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>
+        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-lg sm:px-6 md:hidden">
+          <SidebarTrigger />
+          <div className="flex-1">
+            <Logo />
+          </div>
+        </header>
+        <main className="flex-1 overflow-auto p-4 sm:p-6">{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
