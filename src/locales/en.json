@@ -7,6 +7,7 @@
   "navPlanner": "Planner",
   "navRecipe": "Recipe Generator",
   "navChatbot": "AI Chatbot",
+  "navChallenges": "Challenges",
   "myAccount": "My Account",
   "profile": "Profile",
   "theme": "Theme",
@@ -42,5 +43,7 @@
   "recipeGeneratorTitle": "Recipe Generator",
   "recipeGeneratorSubtitle": "Create delicious recipes tailored to your goals and ingredients.",
   "chatbotTitle": "AI Health Chatbot",
-  "chatbotSubtitle": "Ask me anything about nutrition and wellness."
+  "chatbotSubtitle": "Ask me anything about nutrition and wellness.",
+  "challengesTitle": "Healthy Challenges",
+  "challengesSubtitle": "Join a challenge to build healthy habits."
 }

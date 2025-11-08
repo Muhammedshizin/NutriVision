@@ -18,6 +18,7 @@ import {
   Languages,
   UtensilsCrossed,
   Bot,
+  Trophy,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -66,6 +67,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     { href: '/planner', icon: CalendarCheck, label: translations.navPlanner },
     { href: '/recipe', icon: UtensilsCrossed, label: translations.navRecipe },
     { href: '/chatbot', icon: Bot, label: translations.navChatbot },
+    { href: '/challenges', icon: Trophy, label: translations.navChallenges },
   ];
 
   const handleLogout = () => {
