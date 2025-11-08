@@ -1,0 +1,30 @@
+
+{
+  "foods": [
+    { "name": "Apple", "calories": 95 },
+    { "name": "Banana", "calories": 105 },
+    { "name": "Orange", "calories": 62 },
+    { "name": "Grapes (1 cup)", "calories": 104 },
+    { "name": "Strawberry (1 cup)", "calories": 49 },
+    { "name": "Chicken Breast (100g)", "calories": 165 },
+    { "name": "Salmon (100g)", "calories": 208 },
+    { "name": "Beef (100g, ground)", "calories": 250 },
+    { "name": "Tofu (100g)", "calories": 76 },
+    { "name": "Egg (large)", "calories": 78 },
+    { "name": "Rice (1 cup, cooked)", "calories": 206 },
+    { "name": "Pasta (1 cup, cooked)", "calories": 221 },
+    { "name": "Bread (1 slice)", "calories": 79 },
+    { "name": "Potato (medium)", "calories": 163 },
+    { "name": "Oats (1 cup, cooked)", "calories": 158 },
+    { "name": "Milk (1 cup)", "calories": 103 },
+    { "name": "Cheese (cheddar, 28g)", "calories": 113 },
+    { "name": "Yogurt (plain, 1 cup)", "calories": 150 },
+    { "name": "Almonds (28g)", "calories": 164 },
+    { "name": "Peanut Butter (2 tbsp)", "calories": 188 },
+    { "name": "Broccoli (1 cup)", "calories": 55 },
+    { "name": "Carrots (1 cup)", "calories": 52 },
+    { "name": "Spinach (1 cup)", "calories": 7 },
+    { "name": "Tomato (medium)", "calories": 22 },
+    { "name": "Lettuce (1 cup)", "calories": 5 }
+  ]
+}

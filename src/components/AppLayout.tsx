@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -9,6 +10,7 @@ import {
   History,
   LogOut,
   User as UserIcon,
+  Calculator,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -39,6 +41,7 @@ const navItems = [
   { href: '/home', icon: Home, label: 'Analyzer' },
   { href: '/dashboard', icon: BarChart3, label: 'Dashboard' },
   { href: '/history', icon: History, label: 'History' },
+  { href: '/calculator', icon: Calculator, label: 'Calculator' },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
