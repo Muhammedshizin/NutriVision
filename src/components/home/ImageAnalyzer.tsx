@@ -46,7 +46,6 @@ export function ImageAnalyzer() {
   );
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const cameraInputRef = useRef<HTMLInputElement>(null);
   const { translations } = useLanguage();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +68,18 @@ export function ImageAnalyzer() {
       reader.readAsDataURL(file);
     }
   };
+  
+  const handleButtonClick = (capture: boolean) => {
+    if (fileInputRef.current) {
+        if(capture) {
+            fileInputRef.current.setAttribute('capture', 'environment');
+        } else {
+            fileInputRef.current.removeAttribute('capture');
+        }
+        fileInputRef.current.click();
+    }
+  }
+
 
   const handleAnalyze = async () => {
     if (!imageData) {
@@ -138,9 +149,6 @@ export function ImageAnalyzer() {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-    if (cameraInputRef.current) {
-        cameraInputRef.current.value = '';
-    }
   };
 
   return (
@@ -163,14 +171,6 @@ export function ImageAnalyzer() {
             ref={fileInputRef}
             className="hidden"
           />
-           <input
-            type="file"
-            accept="image/*"
-            capture="environment"
-            onChange={handleFileChange}
-            ref={cameraInputRef}
-            className="hidden"
-          />
           <Camera className="mx-auto h-12 w-12 text-muted-foreground" />
           <h3 className="mt-4 text-lg font-medium text-foreground">
             Take or upload a photo
@@ -179,12 +179,12 @@ export function ImageAnalyzer() {
             PNG, JPG, WEBP up to 4MB
           </p>
           <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-            <Button onClick={() => fileInputRef.current?.click()}>
+            <Button onClick={() => handleButtonClick(false)}>
               <Upload className="mr-2 h-4 w-4" /> Upload from Device
             </Button>
             <Button
               variant="secondary"
-              onClick={() => cameraInputRef.current?.click()}
+              onClick={() => handleButtonClick(true)}
             >
               <Camera className="mr-2 h-4 w-4" /> Take a Picture
             </Button>
