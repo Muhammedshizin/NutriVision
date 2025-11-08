@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Camera,
   Loader2,
@@ -9,6 +9,8 @@ import {
   HeartPulse,
   Info,
   X,
+  Aperture,
+  AlertTriangle,
 } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -28,6 +30,8 @@ import { useLocalStorage } from '@/hooks/use-local-storage';
 import { Progress } from '../ui/progress';
 import { Badge } from '../ui/badge';
 import { useLanguage } from '@/hooks/use-language';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '../ui/dialog';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 type AnalysisState = 'idle' | 'analyzing' | 'feedback' | 'done';
 
@@ -47,6 +51,47 @@ export function ImageAnalyzer() {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { translations } = useLanguage();
+
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [hasCameraPermission, setHasCameraPermission] = useState<boolean | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    let stream: MediaStream;
+    const getCameraPermission = async () => {
+      if (!isCameraOpen) return;
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' },
+        });
+        setHasCameraPermission(true);
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        setHasCameraPermission(false);
+        toast({
+          variant: 'destructive',
+          title: 'Camera Access Denied',
+          description:
+            'Please enable camera permissions in your browser settings.',
+        });
+        setIsCameraOpen(false);
+      }
+    };
+
+    getCameraPermission();
+
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [isCameraOpen, toast]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -69,16 +114,26 @@ export function ImageAnalyzer() {
     }
   };
   
-  const handleButtonClick = (capture: boolean) => {
+  const handleUploadClick = () => {
     if (fileInputRef.current) {
-        if(capture) {
-            fileInputRef.current.setAttribute('capture', 'environment');
-        } else {
-            fileInputRef.current.removeAttribute('capture');
-        }
         fileInputRef.current.click();
     }
   }
+  
+  const handleCapture = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d');
+      context?.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+      const dataUri = canvas.toDataURL('image/jpeg');
+      setImageData(dataUri);
+      setImagePreview(dataUri);
+      setIsCameraOpen(false);
+    }
+  };
 
 
   const handleAnalyze = async () => {
@@ -172,6 +227,7 @@ export function ImageAnalyzer() {
             className="hidden"
             id="image-input"
           />
+           <canvas ref={canvasRef} className="hidden" />
           <Camera className="mx-auto h-12 w-12 text-muted-foreground" />
           <h3 className="mt-4 text-lg font-medium text-foreground">
             Take or upload a photo
@@ -180,12 +236,12 @@ export function ImageAnalyzer() {
             PNG, JPG, WEBP up to 4MB
           </p>
           <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-            <Button onClick={() => handleButtonClick(false)}>
+            <Button onClick={handleUploadClick}>
               <Upload className="mr-2 h-4 w-4" /> Upload from Device
             </Button>
             <Button
               variant="secondary"
-              onClick={() => handleButtonClick(true)}
+              onClick={() => setIsCameraOpen(true)}
             >
               <Camera className="mr-2 h-4 w-4" /> Take a Picture
             </Button>
@@ -351,6 +407,38 @@ export function ImageAnalyzer() {
           </div>
         </div>
       )}
+       <Dialog open={isCameraOpen} onOpenChange={setIsCameraOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Camera</DialogTitle>
+          </DialogHeader>
+          {hasCameraPermission === false ? (
+            <Alert variant="destructive">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>Camera Access Required</AlertTitle>
+              <AlertDescription>
+                Please enable camera permissions in your browser to use this feature.
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <div className="relative">
+              <video ref={videoRef} className="w-full aspect-video rounded-md" autoPlay muted playsInline />
+              {hasCameraPermission === null && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                    <Loader2 className="h-8 w-8 animate-spin text-white" />
+                </div>
+              )}
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCameraOpen(false)}>Cancel</Button>
+            <Button onClick={handleCapture} disabled={!hasCameraPermission}>
+              <Aperture className="mr-2 h-4 w-4" />
+              Capture
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -394,5 +482,4 @@ Progress.defaultProps = {
   ...OldProgress.defaultProps,
   indicatorClassName: 'bg-primary',
 };
-
     
