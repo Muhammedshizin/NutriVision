@@ -64,12 +64,7 @@ export function ImageAnalyzer() {
       reader.onload = (e) => {
         const dataUri = e.target?.result as string;
         setImageData(dataUri);
-
-        // For preview, we can use a different reader to get object URL to avoid large data URI in DOM
-        const previewReader = new FileReader();
-        previewReader.onload = (e) =>
-          setImagePreview(e.target?.result as string);
-        previewReader.readAsDataURL(file);
+        setImagePreview(dataUri);
       };
       reader.readAsDataURL(file);
     }
